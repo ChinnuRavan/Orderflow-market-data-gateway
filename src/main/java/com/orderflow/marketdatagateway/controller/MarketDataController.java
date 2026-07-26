@@ -1,5 +1,6 @@
 package com.orderflow.marketdatagateway.controller;
 
+import com.orderflow.marketdatagateway.model.MarketData;
 import com.orderflow.marketdatagateway.service.MarketDataService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class MarketDataController {
     }
 
     @GetMapping("/")
-    public Mono<String> home() {
-        return marketDataService.getMarketStatus();
+    public Mono<MarketData> home() {
+        return marketDataService.getMarketData();
     }
 }
