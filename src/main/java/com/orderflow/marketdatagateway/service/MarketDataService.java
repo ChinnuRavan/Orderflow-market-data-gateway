@@ -7,8 +7,28 @@ import reactor.core.publisher.Mono;
 @Service
 public class MarketDataService {
 
-    public Mono<MarketData> getMarketData() {
-        MarketData data = new MarketData("AAPL", 198.25);
-        return Mono.just(data);
+    public Mono<MarketData> getMarketData(String symbol) {
+
+        double price;
+
+        switch (symbol.toUpperCase()) {
+
+            case "AAPL":
+                price = 198.25;
+                break;
+
+            case "TSLA":
+                price = 310.50;
+                break;
+
+            case "MSFT":
+                price = 450.75;
+                break;
+
+            default:
+                price = 100.00;
+        }
+
+        return Mono.just(new MarketData(symbol.toUpperCase(), price));
     }
 }
