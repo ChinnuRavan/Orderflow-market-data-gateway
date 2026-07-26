@@ -1,5 +1,6 @@
 package com.orderflow.marketdatagateway.service;
 
+import com.orderflow.marketdatagateway.exception.MarketDataNotFoundException;
 import com.orderflow.marketdatagateway.model.MarketData;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -9,26 +10,11 @@ public class MarketDataService {
 
     public Mono<MarketData> getMarketData(String symbol) {
 
-        double price;
-
-        switch (symbol.toUpperCase()) {
-
-            case "AAPL":
-                price = 198.25;
-                break;
-
-            case "TSLA":
-                price = 310.50;
-                break;
-
-            case "MSFT":
-                price = 450.75;
-                break;
-
-            default:
-                price = 100.00;
+        if (symbol.equalsIgnoreCase("INVALID")) {
+            throw new MarketDataNotFoundException(symbol);
         }
 
-        return Mono.just(new MarketData(symbol.toUpperCase(), price));
+        MarketData data = new MarketData(symbol.toUpperCase(), 198.25);
+        return Mono.just(data);
     }
 }
