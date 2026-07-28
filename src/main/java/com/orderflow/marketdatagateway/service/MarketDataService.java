@@ -10,7 +10,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class MarketDataService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MarketDataService.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(MarketDataService.class);
 
     public Mono<MarketData> getMarketData(String symbol) {
 
@@ -21,7 +22,33 @@ public class MarketDataService {
             throw new MarketDataNotFoundException(symbol);
         }
 
-        MarketData data = new MarketData(symbol.toUpperCase(), 198.25);
+        symbol = symbol.toUpperCase();
+
+        double price;
+
+        switch (symbol) {
+            case "AAPL":
+                price = 198.25;
+                break;
+
+            case "TSLA":
+                price = 315.80;
+                break;
+
+            case "MSFT":
+                price = 512.40;
+                break;
+
+            case "GOOGL":
+                price = 186.15;
+                break;
+
+            default:
+                price = 100.00;
+        }
+
+        MarketData data = new MarketData(symbol, price);
+
         return Mono.just(data);
     }
 }
