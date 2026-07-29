@@ -5,7 +5,11 @@ import com.orderflow.marketdatagateway.model.MarketData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+import java.util.Random;
 
 @Service
 public class MarketDataService {
@@ -50,5 +54,21 @@ public class MarketDataService {
         MarketData data = new MarketData(symbol, price);
 
         return Mono.just(data);
+    }
+
+    public Flux<MarketData> streamMarketData(String symbol) {
+
+        Random random = new Random();
+
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(tick -> {
+
+                    double price = 190 + random.nextDouble() * 20;
+
+                    return new MarketData(
+                            symbol.toUpperCase(),
+                            Math.round(price * 100.0) / 100.0
+                    );
+                });
     }
 }
