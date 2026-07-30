@@ -30,6 +30,10 @@ public Mono<OrderBook> getOrderBook(@PathVariable String symbol) {
 public Flux<Trade> getTrades(@PathVariable String symbol) {
     return marketDataService.getTrades(symbol);
 }
+    @GetMapping(value = "/trades/stream/{symbol}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+public Flux<Trade> streamTrades(@PathVariable String symbol) {
+    return marketDataService.streamTrades(symbol);
+}
 
     @GetMapping(value = "/stream/{symbol}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<MarketData> streamMarketData(@PathVariable String symbol) {

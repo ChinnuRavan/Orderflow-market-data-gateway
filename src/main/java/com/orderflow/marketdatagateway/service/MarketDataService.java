@@ -19,7 +19,6 @@ public class MarketDataService {
     private static final Logger logger =
             LoggerFactory.getLogger(MarketDataService.class);
 
-
     public Mono<MarketData> getMarketData(String symbol) {
 
         logger.info("Fetching market data for symbol: {}", symbol);
@@ -34,7 +33,6 @@ public class MarketDataService {
         double price;
 
         switch (symbol) {
-
             case "AAPL":
                 price = 198.25;
                 break;
@@ -60,7 +58,6 @@ public class MarketDataService {
         return Mono.just(data);
     }
 
-
     public Flux<MarketData> streamMarketData(String symbol) {
 
         Random random = new Random();
@@ -77,6 +74,17 @@ public class MarketDataService {
                 });
     }
 
+    public Flux<Trade> streamTrades(String symbol) {
+
+        Random random = new Random();
+
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(tick -> new Trade(
+                        symbol.toUpperCase(),
+                        Math.round((190 + random.nextDouble() * 20) * 100.0) / 100.0,
+                        random.nextInt(500) + 1
+                ));
+    }
 
     public Mono<OrderBook> getOrderBook(String symbol) {
 
@@ -85,19 +93,19 @@ public class MarketDataService {
         double bidPrice = 198.20;
         double askPrice = 198.30;
 
-        OrderBook orderBook =
-                new OrderBook(symbol, bidPrice, askPrice);
+        OrderBook orderBook = new OrderBook(symbol, bidPrice, askPrice);
 
         return Mono.just(orderBook);
     }
+
     public Flux<Trade> getTrades(String symbol) {
 
-    symbol = symbol.toUpperCase();
+        symbol = symbol.toUpperCase();
 
-    return Flux.just(
-            new Trade(symbol, 198.25, 100),
-            new Trade(symbol, 198.40, 50),
-            new Trade(symbol, 198.10, 75)
-    );
-}
+        return Flux.just(
+                new Trade(symbol, 198.25, 100),
+                new Trade(symbol, 198.40, 50),
+                new Trade(symbol, 198.10, 75)
+        );
+    }
 }
