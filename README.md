@@ -1,27 +1,30 @@
+# 📈 Reactive Market Data Gateway
 
-# 📈 OrderFlow Market Data Gateway
-
-A reactive Market Data Gateway built using **Spring Boot WebFlux** as part of the **OrderFlow Internship Project**. This application exposes REST APIs to provide market data in a reactive and non-blocking manner.
+A reactive stock market data service built using **Spring Boot WebFlux**. This project provides REST APIs for market data, order book, trade history, and real-time streaming using **Project Reactor (Mono & Flux)** and **Server-Sent Events (SSE)**.
 
 ---
 
 ## 🚀 Features
 
-- Reactive REST API using Spring WebFlux
-- Layered Architecture (Controller & Service)
-- Non-blocking programming with Reactor (`Mono`)
-- Maven-based project
-- Easy to extend for real-time market data integration
+- Get market data for stock symbols
+- Support for multiple stocks (AAPL, TSLA, MSFT, GOOGL)
+- Reactive programming with Mono and Flux
+- Live Market Data Streaming
+- Order Book API
+- Trade History API
+- Live Trade Streaming
+- Custom Exception Handling
+- Logging using SLF4J
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Technologies Used
 
 - Java 21
-- Spring Boot 4
+- Spring Boot
 - Spring WebFlux
+- Project Reactor
 - Maven
-- Reactor (Mono)
 - Git & GitHub
 
 ---
@@ -29,45 +32,97 @@ A reactive Market Data Gateway built using **Spring Boot WebFlux** as part of th
 ## 📂 Project Structure
 
 ```
-market-data-gateway
-│── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com.orderflow.marketdatagateway
-│   │   │       ├── controller
-│   │   │       │    └── MarketDataController.java
-│   │   │       ├── service
-│   │   │       │    └── MarketDataService.java
-│   │   │       └── MarketDataGatewayApplication.java
-│   │   └── resources
-│   │        └── application.properties
-│   └── test
-└── pom.xml
+src
+├── controller
+│   └── MarketDataController.java
+├── service
+│   └── MarketDataService.java
+├── model
+│   ├── MarketData.java
+│   ├── OrderBook.java
+│   └── Trade.java
+├── exception
+│   └── MarketDataNotFoundException.java
+└── MarketDataGatewayApplication.java
 ```
 
 ---
 
-## ▶️ Getting Started
+## 📡 API Endpoints
 
-### Clone the Repository
+### Get Market Data
+
+```
+GET /market-data/{symbol}
+```
+
+Example:
+
+```
+GET /market-data/AAPL
+```
+
+---
+
+### Get Order Book
+
+```
+GET /market-data/orderbook/{symbol}
+```
+
+---
+
+### Get Trade History
+
+```
+GET /market-data/trades/{symbol}
+```
+
+---
+
+### Live Market Data Stream (SSE)
+
+```
+GET /market-data/stream/{symbol}
+```
+
+---
+
+### Live Trade Stream (SSE)
+
+```
+GET /market-data/trades/stream/{symbol}
+```
+
+---
+
+## ▶️ Running the Project
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/ChinnuRavan/Orderflow-market-data-gateway.git
 ```
 
-### Navigate to the Project
+Go to the project folder:
 
 ```bash
 cd Orderflow-market-data-gateway
 ```
 
-### Run the Application
+Compile the project:
+
+```bash
+mvn compile
+```
+
+Run the application:
 
 ```bash
 mvn spring-boot:run
 ```
 
-The application starts on:
+The application starts at:
 
 ```
 http://localhost:8080
@@ -75,57 +130,19 @@ http://localhost:8080
 
 ---
 
-## 🌐 API Endpoint
-
-### Home Endpoint
-
-**GET**
-
-```
-http://localhost:8080/
-```
-
-### Response
-
-```
-Market Data Gateway is Running
-```
-
----
-
-## 📌 Current Implementation
-
-- Spring Boot WebFlux Project Setup
-- REST Controller
-- Service Layer
-- Reactive Programming using `Mono`
-- Git Version Control
-- GitHub Integration
-
----
-
-## 🔮 Future Enhancements
-
-- Add MarketData Model
-- Return JSON Response
-- Integrate External Market Data API
-- Exception Handling
-- Logging
-- Validation
-- Unit Testing
-- Docker Support
-
----
-
 ## 👩‍💻 Author
 
 **Bezawada Naga Rajasri**
 
-- GitHub: https://github.com/ChinnuRavan
-- LinkedIn: https://www.linkedin.com/in/bezawada-naga-rajasri-4b303b416/
+GitHub:
+https://github.com/ChinnuRavan
 
 ---
 
-## ⭐ Support
+## 📌 Project Status
 
-If you like this project, consider giving it a ⭐ on GitHub.
+✅ Week 1 Completed
+
+✅ Week 2 Completed
+
+🚧 Week 3 In Progress
