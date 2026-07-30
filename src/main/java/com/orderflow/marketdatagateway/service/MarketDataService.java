@@ -3,6 +3,7 @@ package com.orderflow.marketdatagateway.service;
 import com.orderflow.marketdatagateway.exception.MarketDataNotFoundException;
 import com.orderflow.marketdatagateway.model.MarketData;
 import com.orderflow.marketdatagateway.model.OrderBook;
+import com.orderflow.marketdatagateway.model.Trade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -89,4 +90,14 @@ public class MarketDataService {
 
         return Mono.just(orderBook);
     }
+    public Flux<Trade> getTrades(String symbol) {
+
+    symbol = symbol.toUpperCase();
+
+    return Flux.just(
+            new Trade(symbol, 198.25, 100),
+            new Trade(symbol, 198.40, 50),
+            new Trade(symbol, 198.10, 75)
+    );
+}
 }
