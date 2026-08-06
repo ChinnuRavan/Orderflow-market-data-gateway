@@ -1,5 +1,7 @@
 package com.orderflow.marketdatagateway.websocket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -13,6 +15,9 @@ import java.util.Random;
 @Component
 public class MarketDataWebSocketHandler implements WebSocketHandler {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(MarketDataWebSocketHandler.class);
+
     private final Random random = new Random();
 
     private final String[] symbols = {
@@ -24,6 +29,8 @@ public class MarketDataWebSocketHandler implements WebSocketHandler {
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
+
+        logger.info("Client connected: {}", session.getId());
 
         Flux<String> marketData = Flux.interval(Duration.ofSeconds(1))
                 .map(sequence -> {
@@ -41,6 +48,8 @@ public class MarketDataWebSocketHandler implements WebSocketHandler {
 
         return session.send(
                 marketData.map(session::textMessage)
+        ).doFinally(signalType ->
+                logger.info("Client disconnected: {}", session.getId())
         );
     }
 }

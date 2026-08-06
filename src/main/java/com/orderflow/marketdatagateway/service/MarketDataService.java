@@ -7,8 +7,6 @@ import com.orderflow.marketdatagateway.model.OrderBook;
 import com.orderflow.marketdatagateway.model.Trade;
 import com.orderflow.marketdatagateway.model.Level2OrderBook;
 import com.orderflow.marketdatagateway.model.PriceLevel;
-import com.orderflow.marketdatagateway.model.Level2OrderBook;
-import com.orderflow.marketdatagateway.model.PriceLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
