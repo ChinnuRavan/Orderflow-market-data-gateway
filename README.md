@@ -81,6 +81,31 @@ market-data-gateway
 ├── pom.xml
 └── README.md
 ```
+---
+
+## 🏗️ Project Architecture
+
+```
+                Client
+                   │
+                   ▼
+      Spring WebFlux Controller
+                   │
+                   ▼
+        MarketDataService
+                   │
+        ┌──────────┴──────────┐
+        ▼                     ▼
+   REST APIs             WebSocket / SSE
+        │                     │
+        └──────────┬──────────┘
+                   ▼
+          Reactive Data Stream
+```
+
+This project uses a reactive architecture powered by Spring WebFlux and Project Reactor. REST endpoints return `Mono` and `Flux`, while WebSocket and SSE provide real-time streaming to connected clients.
+
+---
 
 ---
 
